@@ -2,9 +2,12 @@ import pandas as pd
 import pytest
 from tensorflow.keras.models import Sequential
 
-from train import (read_data,
-                   create_model,
-                   train_model)
+from train_pratica import (reset_seeds,
+                                        read_data,
+                                        process_data,
+                                        create_model,
+                                        config_mlflow,
+                                        train_model)
 
 
 @pytest.fixture
@@ -69,6 +72,6 @@ def test_train_model(sample_data):
     X = sample_data.drop(['fetal_health'], axis=1)
     y = sample_data['fetal_health'] - 1
     model = create_model(X)
-    train_model(model, X, y, is_train=False)
+    train_model(model, X, y, is_train = False)
     assert model.history.history['loss'][-1] > 0
     assert model.history.history['val_loss'][-1] > 0
